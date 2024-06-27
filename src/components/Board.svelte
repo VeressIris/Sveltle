@@ -43,12 +43,12 @@
           for (let i = 0; i < 5; i++) {
             if (currentWord[i] !== winningWord[i]) {
               if (winningWord.includes(currentWord[i])) {
-                colorBoard[tries][i] = "orange-link";
+                colorBoard[tries][i] = "warning";
               } else {
-                colorBoard[tries][i] = "wrong";
+                colorBoard[tries][i] = "base-100";
               }
             } else {
-              colorBoard[tries][i] = "correct";
+              colorBoard[tries][i] = "success";
             }
           }
 
