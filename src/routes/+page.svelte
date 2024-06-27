@@ -42,7 +42,7 @@
     </svg>
   </label>
 </div>
-<div class="flex flex-col items-center h-screen my-24">
+<div class="flex flex-col items-center h-screen my-10">
   <h1 class="text-4xl"><span class="text-orange-link">Svelt</span>le</h1>
   <p class="my-2 text-lg">
     A <a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a> clone

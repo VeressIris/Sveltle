@@ -13,19 +13,28 @@
   }
 
   let currentWord = "";
-
+  let tries = 0;
   onMount(() => {
     // listen to key presses
     document.addEventListener(
       "keydown",
       (event) => {
         var keyValue = event.key;
-        if (isLetter(keyValue)) {
+
+        // add characters
+        if (isLetter(keyValue) && currentWord.length < 5) {
           currentWord += keyValue;
-        }
-        if (keyValue === "Enter") {
+          board[tries][currentWord.length - 1] =
+            currentWord[currentWord.length - 1];
           console.log(currentWord);
         }
+
+        // check entered word
+        if (keyValue === "Enter" && currentWord.length === 5) {
+          tries++;
+        }
+
+        // delete characters
         if (keyValue === "Backspace") {
           currentWord = currentWord.slice(0, -1);
           console.log(currentWord);
