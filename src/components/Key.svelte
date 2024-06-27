@@ -3,7 +3,7 @@
 </script>
 
 <button
-  class="bg-key-dark text-3xl rounded-md m-1 min-w-10 h-12 p-3 flex justify-center items-center"
+  class="bg-key-light text-3xl rounded-md m-1 min-w-10 h-12 p-3 flex justify-center items-center"
 >
   {#if letter === "bcksp"}
     <svg

@@ -1,13 +1,15 @@
 <script lang="ts">
   import Board from "../components/Board.svelte";
   import Keyboard from "../components/Keyboard.svelte";
+  import { isDark } from "../stores";
 </script>
 
 <div class="flex flex-row justify-end mt-4 mr-4">
   <label class="grid cursor-pointer place-items-center">
     <input
-      type="checkbox"
       value="dark"
+      type="checkbox"
+      bind:checked={$isDark}
       class="toggle theme-controller bg-base-content col-span-2 col-start-1 row-start-1"
     />
     <svg
