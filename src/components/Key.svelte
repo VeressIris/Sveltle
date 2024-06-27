@@ -1,9 +1,12 @@
 <script lang="ts">
+  import { isDark } from "../stores";
   export let letter: string;
 </script>
 
 <button
-  class="bg-key-light text-3xl rounded-md m-1 min-w-10 h-12 p-3 flex justify-center items-center"
+  class="text-3xl rounded-md m-1 min-w-10 h-12 p-3 flex justify-center items-center"
+  class:bg-key-light={$isDark === false}
+  class:bg-key-dark={$isDark === true}
 >
   {#if letter === "bcksp"}
     <svg
