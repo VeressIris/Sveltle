@@ -21,7 +21,7 @@
   let colorBoard = board.map((row) => row.map(() => ""));
 
   onMount(() => {
-    console.log(`Word you're looking for is: ${winningWord}`);
+    console.log(`The word you're looking for is: ${winningWord}`);
 
     // listen to key presses
     document.addEventListener(

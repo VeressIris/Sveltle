@@ -5,9 +5,9 @@
 
 <div
   class="w-20 h-20 border-solid border-2 border-black mx-1 my-1 flex justify-center items-center text-4xl font-medium"
-  class:bg-correct={color === "correct"}
-  class:bg-orange-link={color === "orange-link"}
-  class:bg-wrong={color === "wrong"}
+  class:bg-success={color === "success"}
+  class:bg-warning={color === "warning"}
+  class:bg-base-300={color === "base-100"}
 >
   {letter}
 </div>
