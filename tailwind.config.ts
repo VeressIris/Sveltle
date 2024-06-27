@@ -8,6 +8,8 @@ export default {
     extend: {
       colors: {
         "orange-link": "#eb6732",
+        "wrong": "#A02600",
+        "correct": "#00A801",
       },
     },
   },
