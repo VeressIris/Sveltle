@@ -1,5 +1,6 @@
 <script lang="ts">
   import Board from "../components/Board.svelte";
+  import Keyboard from "../components/Keyboard.svelte";
 </script>
 
 <div class="flex flex-row justify-end mt-4 mr-4">
@@ -43,11 +44,12 @@
   </label>
 </div>
 <div class="flex flex-col items-center h-screen my-10">
-  <h1 class="text-4xl"><span class="text-orange-link">Svelt</span>le</h1>
+  <h1 class="text-4xl"><span class="text-primary">Svelt</span>le</h1>
   <p class="my-2 text-lg">
     A <a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a> clone
     built with <a href="https://svelte.dev/">Svelte</a> and
     <a href="https://www.typescriptlang.org/">Typescript</a>.
   </p>
   <Board />
+  <Keyboard />
 </div>

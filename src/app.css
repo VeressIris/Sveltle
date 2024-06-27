@@ -3,9 +3,17 @@
 @tailwind utilities;
 
 a {
-  @apply text-orange-link underline underline-offset-2;
+  @apply text-primary underline underline-offset-2;
 }
 
 a:hover {
   @apply decoration-2;
+}
+
+button:hover {
+  @apply bg-base-200;
+}
+
+button:active {
+  @apply bg-base-300;
 }

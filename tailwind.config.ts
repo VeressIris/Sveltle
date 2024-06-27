@@ -7,9 +7,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        "orange-link": "#eb6732",
-        wrong: "#8F1300",
-        correct: "#00A801",
+        key: {
+          light: "#c7c9cc",
+          dark: "#313531",
+        },
       },
     },
   },
@@ -65,4 +66,5 @@ export default {
       },
     ],
   },
+  darkMode: ["class", '[data-theme="dark"]'],
 } as Config;
