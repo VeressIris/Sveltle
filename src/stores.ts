@@ -70,3 +70,47 @@ if (typeof window !== "undefined") {
     }
   });
 }
+
+// board store
+let storedBoard: string[][];
+
+function createDefaultBoard() {
+  return Array.from({ length: 6 }, () => Array(5).fill(""));
+}
+
+if (typeof window !== "undefined") {
+  try {
+    const boardFromStorage = localStorage.getItem("board");
+    if (boardFromStorage) {
+      storedBoard = JSON.parse(boardFromStorage);
+      if (
+        !Array.isArray(storedBoard) ||
+        storedBoard.length !== 6 ||
+        !storedBoard.every((row) => Array.isArray(row) && row.length === 5)
+      ) {
+        console.warn(
+          "Invalid board data in localStorage, creating default board"
+        );
+        storedBoard = createDefaultBoard();
+      }
+    } else {
+      storedBoard = createDefaultBoard();
+    }
+  } catch (error) {
+    console.error("Failed to parse board from localStorage:", error);
+    storedBoard = createDefaultBoard();
+  }
+} else {
+  storedBoard = createDefaultBoard();
+}
+
+export const board = writable(storedBoard);
+
+if (typeof window !== "undefined") {
+  board.subscribe((value) => {
+    localStorage.setItem("board", JSON.stringify(value));
+  });
+}
+
+// current word store
+export const currentWord = writable("");

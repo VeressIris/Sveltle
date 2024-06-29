@@ -1,32 +1,47 @@
 <script lang="ts">
-  import { isDark } from "../stores";
+  import { isDark, board, numOfTries, pastWords, currentWord } from "../stores";
+  import { get } from "svelte/store";
+
   export let key: string;
 
-  let currentWord = "";
+  board.set(Array.from({ length: 6 }, () => Array(5).fill("")));
 
-  function handleKeyPress(key: string) {
-    // add characters
-    if (currentWord.length < 5) {
-      currentWord += key;
-      console.log(currentWord);
+  function handleKeyPress() {
+    let $currentWord = get(currentWord);
+    let $numOfTries = get(numOfTries);
+    let $board = get(board);
+
+    // Delete characters
+    if (key === "bcksp") {
+      if ($currentWord.length > 0) {
+        $currentWord = $currentWord.slice(0, -1);
+        $board[$numOfTries][$currentWord.length] = "";
+        currentWord.set($currentWord);
+        board.set($board);
+      }
       return;
     }
-    // check entered word
-    if (key == "enter" && currentWord.length === 5) {
-      currentWord = "";
+
+    // Check entered word
+    if (key === "enter" && $currentWord.length === 5) {
+      pastWords.update((words) => [...words, $currentWord]);
+      currentWord.set("");
+      numOfTries.update((n) => n + 1);
       return;
     }
-    // delete characters
-    if (key == "bcksp") {
-      currentWord = currentWord.slice(0, -1);
-      console.log(currentWord);
-      return;
+
+    // Add characters
+    if ($currentWord.length < 5 && key.length === 1) {
+      $currentWord += key;
+      $board[$numOfTries][$currentWord.length - 1] = key;
+      currentWord.set($currentWord);
+      board.set($board);
     }
   }
 </script>
 
 <button
-  on:click={() => handleKeyPress(key)}
+  on:click={handleKeyPress}
   class="text-3xl rounded-md m-1 min-w-10 h-12 p-3 flex justify-center items-center"
   class:bg-key-light={$isDark === false}
   class:bg-key-dark={$isDark === true}
