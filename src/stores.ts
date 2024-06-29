@@ -118,3 +118,40 @@ export const currentWord = writable("");
 // winning word store
 // TODO: add this to LOCAL STORAGE so that a new word is generated only when the puzzle is completed
 export const winningWord = writable("");
+
+// color board store
+let storedColorBoard: string[][];
+
+if (typeof window !== "undefined") {
+  try {
+    const boardFromStorage = localStorage.getItem("colorBoard");
+    if (boardFromStorage) {
+      storedColorBoard = JSON.parse(boardFromStorage);
+      if (
+        !Array.isArray(storedColorBoard) ||
+        storedColorBoard.length !== 6 ||
+        !storedColorBoard.every((row) => Array.isArray(row) && row.length === 5)
+      ) {
+        console.warn(
+          "Invalid color board data in localStorage, creating default board"
+        );
+        storedColorBoard = createDefaultBoard();
+      }
+    } else {
+      storedColorBoard = createDefaultBoard();
+    }
+  } catch (error) {
+    console.error("Failed to parse color board from localStorage:", error);
+    storedColorBoard = createDefaultBoard();
+  }
+} else {
+  storedColorBoard = createDefaultBoard();
+}
+
+export const colorBoard = writable(storedColorBoard);
+
+if (typeof window !== "undefined") {
+  colorBoard.subscribe((value) => {
+    localStorage.setItem("colorBoard", JSON.stringify(value));
+  });
+}

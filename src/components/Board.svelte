@@ -2,7 +2,14 @@
   import Square from "../components/Square.svelte";
   import { onMount } from "svelte";
   import { generate, count } from "random-words";
-  import { pastWords, numOfTries, board, currentWord, winningWord } from "../stores";
+  import {
+    pastWords,
+    numOfTries,
+    board,
+    currentWord,
+    winningWord,
+    colorBoard,
+  } from "../stores";
   import { get } from "svelte/store";
 
   // checks if key pressed is a letter
@@ -14,8 +21,8 @@
   $pastWords = [];
   $numOfTries = 0;
   board.set(Array.from({ length: 6 }, () => Array(5).fill("")));
-
-  let colorBoard = get(board).map((row) => row.map(() => ""));
+  
+  colorBoard.set(Array.from({ length: 6 }, () => Array(5).fill("")));
 
   onMount(() => {
     console.log(`The word you're looking for is: ${$winningWord}`);
@@ -41,12 +48,12 @@
           for (let i = 0; i < 5; i++) {
             if ($currentWord[i] !== $winningWord[i]) {
               if ($winningWord.includes($currentWord[i])) {
-                colorBoard[$numOfTries][i] = "warning";
+                $colorBoard[$numOfTries][i] = "warning";
               } else {
-                colorBoard[$numOfTries][i] = "base-100";
+                $colorBoard[$numOfTries][i] = "base-100";
               }
             } else {
-              colorBoard[$numOfTries][i] = "success"; 
+              $colorBoard[$numOfTries][i] = "success";
             }
           }
 
@@ -71,7 +78,7 @@
   {#each $board as row, i}
     <div class="flex flex-row">
       {#each row as j, k}
-        <Square letter={j} color={colorBoard[i][k]} />
+        <Square letter={j} color={$colorBoard[i][k]} />
       {/each}
     </div>
   {/each}

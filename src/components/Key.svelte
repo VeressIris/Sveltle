@@ -1,7 +1,14 @@
 <script lang="ts">
-  import { isDark, board, numOfTries, pastWords, currentWord } from "../stores";
+  import {
+    isDark,
+    board,
+    numOfTries,
+    pastWords,
+    currentWord,
+    winningWord,
+    colorBoard,
+  } from "../stores";
   import { get } from "svelte/store";
-
   export let key: string;
 
   board.set(Array.from({ length: 6 }, () => Array(5).fill("")));
@@ -11,7 +18,7 @@
     let $numOfTries = get(numOfTries);
     let $board = get(board);
 
-    // Delete characters
+    // delete characters
     if (key === "bcksp") {
       if ($currentWord.length > 0) {
         $currentWord = $currentWord.slice(0, -1);
@@ -22,15 +29,26 @@
       return;
     }
 
-    // Check entered word
+    // check entered word
     if (key === "enter" && $currentWord.length === 5) {
+      for (let i = 0; i < 5; i++) {
+        if ($currentWord[i] !== $winningWord[i]) {
+          if ($winningWord.includes($currentWord[i])) {
+            $colorBoard[$numOfTries][i] = "warning";
+          } else {
+            $colorBoard[$numOfTries][i] = "base-100";
+          }
+        } else {
+          $colorBoard[$numOfTries][i] = "success";
+        }
+      }
       pastWords.update((words) => [...words, $currentWord]);
       currentWord.set("");
       numOfTries.update((n) => n + 1);
       return;
     }
 
-    // Add characters
+    // add characters
     if ($currentWord.length < 5 && key.length === 1) {
       $currentWord += key;
       $board[$numOfTries][$currentWord.length - 1] = key;
