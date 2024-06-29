@@ -12,7 +12,7 @@
   {#each keyboardLayout as row}
     <div class="flex justify-center">
       {#each row as key}
-        <Key letter={key} />
+        <Key {key} />
       {/each}
     </div>
   {/each}

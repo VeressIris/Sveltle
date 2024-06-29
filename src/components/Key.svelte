@@ -1,14 +1,32 @@
 <script lang="ts">
   import { isDark } from "../stores";
-  export let letter: string;
+  import { currentWord } from "../stores";
+  export let key: string;
+
+  function handleKeyPress(key: string) {
+    if (key == "bcksp") {
+      $currentWord = $currentWord.slice(0, -1);
+      console.log($currentWord);
+      return;
+    }
+    if (key == "enter" && $currentWord.length === 5) {
+      return;
+    }
+    if ($currentWord.length < 5) {
+      $currentWord += key;
+      console.log($currentWord);
+      return;
+    }
+  }
 </script>
 
 <button
+  on:click={() => handleKeyPress(key)}
   class="text-3xl rounded-md m-1 min-w-10 h-12 p-3 flex justify-center items-center"
   class:bg-key-light={$isDark === false}
   class:bg-key-dark={$isDark === true}
 >
-  {#if letter === "bcksp"}
+  {#if key === "bcksp"}
     <svg
       xmlns="http://www.w3.org/2000/svg"
       height="40px"
@@ -20,6 +38,6 @@
       /></svg
     >
   {:else}
-    {letter}
+    {key}
   {/if}
 </button>
