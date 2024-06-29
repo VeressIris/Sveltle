@@ -10,6 +10,7 @@
       return;
     }
     if (key == "enter" && $currentWord.length === 5) {
+      $currentWord = "";
       return;
     }
     if ($currentWord.length < 5) {

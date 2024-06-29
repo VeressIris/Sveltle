@@ -29,6 +29,9 @@
       (event) => {
         var keyValue = event.key;
 
+        // ignore ctrl key (ctrl+r used to add r to the word)
+        if (event.ctrlKey) return;
+
         // add characters
         if (isLetter(keyValue) && $currentWord.length < 5) {
           $currentWord += keyValue;
@@ -54,7 +57,6 @@
 
           $currentWord = ""; //reset current word
           tries++; // increment tries
-          console.log(colorBoard);
         }
 
         // delete characters
