@@ -114,3 +114,7 @@ if (typeof window !== "undefined") {
 
 // current word store
 export const currentWord = writable("");
+
+// winning word store
+// TODO: add this to LOCAL STORAGE so that a new word is generated only when the puzzle is completed
+export const winningWord = writable("");

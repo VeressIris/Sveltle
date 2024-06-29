@@ -2,16 +2,13 @@
   import Square from "../components/Square.svelte";
   import { onMount } from "svelte";
   import { generate, count } from "random-words";
-  import { pastWords, numOfTries, board, currentWord } from "../stores";
+  import { pastWords, numOfTries, board, currentWord, winningWord } from "../stores";
   import { get } from "svelte/store";
 
   // checks if key pressed is a letter
   function isLetter(key: string) {
     return key >= "a" && key <= "z";
   }
-
-  // TODO: save this in local storage so that a new word is generated only when the puzzle is complete
-  const winningWord = generate({ minLength: 5, maxLength: 5 });
 
   // TODO: THIS CAN BE REMOVED ONCE I'M DONE WITH TESTING
   $pastWords = [];
@@ -21,7 +18,7 @@
   let colorBoard = get(board).map((row) => row.map(() => ""));
 
   onMount(() => {
-    console.log(`The word you're looking for is: ${winningWord}`);
+    console.log(`The word you're looking for is: ${$winningWord}`);
 
     // listen to key presses
     document.addEventListener(
@@ -42,8 +39,8 @@
         // check entered word
         if (keyValue === "Enter" && $currentWord.length === 5) {
           for (let i = 0; i < 5; i++) {
-            if ($currentWord[i] !== winningWord[i]) {
-              if (winningWord.includes($currentWord[i])) {
+            if ($currentWord[i] !== $winningWord[i]) {
+              if ($winningWord.includes($currentWord[i])) {
                 colorBoard[$numOfTries][i] = "warning";
               } else {
                 colorBoard[$numOfTries][i] = "base-100";

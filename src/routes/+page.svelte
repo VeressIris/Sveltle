@@ -1,7 +1,10 @@
 <script lang="ts">
   import Board from "../components/Board.svelte";
   import Keyboard from "../components/Keyboard.svelte";
-  import { isDark } from "../stores";
+  import { isDark, winningWord } from "../stores";
+  import { generate } from "random-words";
+
+  $winningWord = generate({ minLength: 5, maxLength: 5 }).toString();
 </script>
 
 <div class="flex flex-row justify-end mt-4 mr-4">
