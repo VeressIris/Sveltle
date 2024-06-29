@@ -17,30 +17,6 @@ if (typeof window !== "undefined") {
   });
 }
 
-// word history store
-let storedWords: string[];
-
-if (typeof window !== "undefined") {
-  // quite frankly i'm not entirely sure why exactly this try-catch block is necessary but without I think it's so that I can ignore the compiler errors
-  try {
-    const pastWordsFromStorage = localStorage.getItem("pastWords");
-    if (pastWordsFromStorage) {
-      storedWords = JSON.parse(pastWordsFromStorage);
-    }
-  } catch (error) {
-    console.error("Failed to parse pastWords from localStorage:", error);
-    storedWords = [];
-  }
-}
-
-export const pastWords = writable(storedWords!);
-
-if (typeof window !== "undefined") {
-  pastWords.subscribe((value) => {
-    localStorage.setItem("pastWords", JSON.stringify(value));
-  });
-}
-
 // number of tries store
 let storedTries: number;
 
@@ -153,5 +129,22 @@ export const colorBoard = writable(storedColorBoard);
 if (typeof window !== "undefined") {
   colorBoard.subscribe((value) => {
     localStorage.setItem("colorBoard", JSON.stringify(value));
+  });
+}
+
+// incorrect keys store
+let storedKeys: string;
+
+if (typeof window !== "undefined") {
+  storedKeys = localStorage.getItem("incorrectKeys")! || "";
+} else {
+  storedKeys = "";
+}
+
+export const incorrectKeys = writable(storedKeys);
+
+if (typeof window !== "undefined") {
+  incorrectKeys.subscribe((value) => {
+    localStorage.setItem("incorrectKeys", String(value));
   });
 }

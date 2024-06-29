@@ -3,15 +3,32 @@
     isDark,
     board,
     numOfTries,
-    pastWords,
+    incorrectKeys,
     currentWord,
     winningWord,
     colorBoard,
   } from "../stores";
   import { get } from "svelte/store";
+
   export let key: string;
+  let active = true;
 
   board.set(Array.from({ length: 6 }, () => Array(5).fill("")));
+
+  $: {
+    $incorrectKeys;
+    active = seeIfActive(key);
+  }
+
+  function seeIfActive(key: string) {
+    if (key === "bcksp" || key === "enter") return true;
+    if ($incorrectKeys == "") return true;
+
+    if ($incorrectKeys.includes(key)) {
+      return false;
+    }
+    return true;
+  }
 
   function handleKeyPress() {
     let $currentWord = get(currentWord);
@@ -37,12 +54,17 @@
             $colorBoard[$numOfTries][i] = "warning";
           } else {
             $colorBoard[$numOfTries][i] = "base-100";
+
+            // keep track of keys that don't appear in the word
+            if (!$incorrectKeys.includes($currentWord[i])) {
+              $incorrectKeys += $currentWord[i];
+            }
           }
         } else {
           $colorBoard[$numOfTries][i] = "success";
         }
       }
-      pastWords.update((words) => [...words, $currentWord]);
+
       currentWord.set("");
       numOfTries.update((n) => n + 1);
       return;
@@ -61,8 +83,9 @@
 <button
   on:click={handleKeyPress}
   class="text-3xl rounded-md m-1 min-w-10 h-12 p-3 flex justify-center items-center"
-  class:bg-key-light={$isDark === false}
-  class:bg-key-dark={$isDark === true}
+  class:bg-key-light={$isDark === false && active}
+  class:bg-key-dark={$isDark === true && active}
+  class:bg-base-300={!active}
 >
   {#if key === "bcksp"}
     <svg

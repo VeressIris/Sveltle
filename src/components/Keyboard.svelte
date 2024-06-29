@@ -1,5 +1,6 @@
 <script lang="ts">
   import Key from "./Key.svelte";
+  import { incorrectKeys } from "../stores";
 
   let keyboardLayout = [
     "qwertyuiop".split(""),

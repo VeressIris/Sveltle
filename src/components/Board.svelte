@@ -3,12 +3,12 @@
   import { onMount } from "svelte";
   import { generate, count } from "random-words";
   import {
-    pastWords,
     numOfTries,
     board,
     currentWord,
     winningWord,
     colorBoard,
+    incorrectKeys,
   } from "../stores";
   import { get } from "svelte/store";
 
@@ -18,10 +18,10 @@
   }
 
   // TODO: THIS CAN BE REMOVED ONCE I'M DONE WITH TESTING
-  $pastWords = [];
   $numOfTries = 0;
+  $incorrectKeys = "";
   board.set(Array.from({ length: 6 }, () => Array(5).fill("")));
-  
+
   colorBoard.set(Array.from({ length: 6 }, () => Array(5).fill("")));
 
   onMount(() => {
@@ -51,13 +51,17 @@
                 $colorBoard[$numOfTries][i] = "warning";
               } else {
                 $colorBoard[$numOfTries][i] = "base-100";
+
+                // keep track of keys that don't appear in the word
+                if (!$incorrectKeys.includes($currentWord[i])) {
+                  $incorrectKeys += $currentWord[i];
+                }
               }
             } else {
               $colorBoard[$numOfTries][i] = "success";
             }
           }
 
-          $pastWords = [...$pastWords, $currentWord]; //keep track of word tried
           $currentWord = ""; //reset current word
           $numOfTries++; // increment tries
         }
