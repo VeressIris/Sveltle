@@ -1,21 +1,22 @@
 <script lang="ts">
   import { isDark } from "../stores";
-  import { currentWord } from "../stores";
   export let key: string;
+
+  let currentWord = "";
 
   function handleKeyPress(key: string) {
     if (key == "bcksp") {
-      $currentWord = $currentWord.slice(0, -1);
-      console.log($currentWord);
+      currentWord = currentWord.slice(0, -1);
+      console.log(currentWord);
       return;
     }
-    if (key == "enter" && $currentWord.length === 5) {
-      $currentWord = "";
+    if (key == "enter" && currentWord.length === 5) {
+      currentWord = "";
       return;
     }
-    if ($currentWord.length < 5) {
-      $currentWord += key;
-      console.log($currentWord);
+    if (currentWord.length < 5) {
+      currentWord += key;
+      console.log(currentWord);
       return;
     }
   }
