@@ -5,17 +5,20 @@
   let currentWord = "";
 
   function handleKeyPress(key: string) {
-    if (key == "bcksp") {
-      currentWord = currentWord.slice(0, -1);
+    // add characters
+    if (currentWord.length < 5) {
+      currentWord += key;
       console.log(currentWord);
       return;
     }
+    // check entered word
     if (key == "enter" && currentWord.length === 5) {
       currentWord = "";
       return;
     }
-    if (currentWord.length < 5) {
-      currentWord += key;
+    // delete characters
+    if (key == "bcksp") {
+      currentWord = currentWord.slice(0, -1);
       console.log(currentWord);
       return;
     }
