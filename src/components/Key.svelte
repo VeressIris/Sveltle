@@ -9,6 +9,7 @@
     colorBoard,
   } from "../stores";
   import { get } from "svelte/store";
+  import { wordExists } from "../util";
 
   export let key: string;
   let active = true;
@@ -30,7 +31,7 @@
     return true;
   }
 
-  function handleKeyPress() {
+  async function handleKeyPress() {
     let $currentWord = get(currentWord);
     let $numOfTries = get(numOfTries);
     let $board = get(board);
@@ -47,21 +48,26 @@
     }
 
     // check entered word
+    // again, hate the nesting here
     if (key === "enter" && $currentWord.length === 5) {
-      for (let i = 0; i < 5; i++) {
-        if ($currentWord[i] !== $winningWord[i]) {
-          if ($winningWord.includes($currentWord[i])) {
-            $colorBoard[$numOfTries][i] = "warning";
-          } else {
-            $colorBoard[$numOfTries][i] = "base-100";
+      if ((await wordExists($currentWord)) == false) {
+        alert("Word doesn't exist.");
+      } else {
+        for (let i = 0; i < 5; i++) {
+          if ($currentWord[i] !== $winningWord[i]) {
+            if ($winningWord.includes($currentWord[i])) {
+              $colorBoard[$numOfTries][i] = "warning";
+            } else {
+              $colorBoard[$numOfTries][i] = "base-100";
 
-            // keep track of keys that don't appear in the word
-            if (!$incorrectKeys.includes($currentWord[i])) {
-              $incorrectKeys += $currentWord[i];
+              // keep track of keys that don't appear in the word
+              if (!$incorrectKeys.includes($currentWord[i])) {
+                $incorrectKeys += $currentWord[i];
+              }
             }
+          } else {
+            $colorBoard[$numOfTries][i] = "success";
           }
-        } else {
-          $colorBoard[$numOfTries][i] = "success";
         }
       }
 

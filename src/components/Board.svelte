@@ -11,6 +11,7 @@
     incorrectKeys,
   } from "../stores";
   import { get } from "svelte/store";
+  import { wordExists } from "../util";
 
   // checks if key pressed is a letter
   function isLetter(key: string) {
@@ -30,7 +31,7 @@
     // listen to key presses
     document.addEventListener(
       "keydown",
-      (event) => {
+      async (event) => {
         var keyValue = event.key;
         // ignore ctrl key (ctrl+r used to add r to the word)
         if (event.ctrlKey) return;
@@ -44,26 +45,31 @@
         }
 
         // check entered word
+        // hate the nesting here but what can you do :')
         if (keyValue === "Enter" && $currentWord.length === 5) {
-          for (let i = 0; i < 5; i++) {
-            if ($currentWord[i] !== $winningWord[i]) {
-              if ($winningWord.includes($currentWord[i])) {
-                $colorBoard[$numOfTries][i] = "warning";
-              } else {
-                $colorBoard[$numOfTries][i] = "base-100";
+          if ((await wordExists($currentWord)) == false) {
+            alert("Word doesn't exist.");
+          } else {
+            for (let i = 0; i < 5; i++) {
+              if ($currentWord[i] !== $winningWord[i]) {
+                if ($winningWord.includes($currentWord[i])) {
+                  $colorBoard[$numOfTries][i] = "warning";
+                } else {
+                  $colorBoard[$numOfTries][i] = "base-100";
 
-                // keep track of keys that don't appear in the word
-                if (!$incorrectKeys.includes($currentWord[i])) {
-                  $incorrectKeys += $currentWord[i];
+                  // keep track of keys that don't appear in the word
+                  if (!$incorrectKeys.includes($currentWord[i])) {
+                    $incorrectKeys += $currentWord[i];
+                  }
                 }
+              } else {
+                $colorBoard[$numOfTries][i] = "success";
               }
-            } else {
-              $colorBoard[$numOfTries][i] = "success";
             }
-          }
 
-          $currentWord = ""; //reset current word
-          $numOfTries++; // increment tries
+            $currentWord = ""; //reset current word
+            $numOfTries++; // increment tries
+          }
         }
 
         // delete characters
