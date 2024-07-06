@@ -89,7 +89,7 @@
   });
 </script>
 
-<div class="flex flex-col mt-8">
+<div class="flex flex-col mt-4 tablet:mt-8">
   {#each $board as row, i}
     <div class="flex flex-row">
       {#each row as j, k}

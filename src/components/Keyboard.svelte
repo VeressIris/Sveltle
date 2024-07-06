@@ -1,6 +1,5 @@
 <script lang="ts">
   import Key from "./Key.svelte";
-  import { incorrectKeys } from "../stores";
 
   let keyboardLayout = [
     "qwertyuiop".split(""),
@@ -9,7 +8,7 @@
   ];
 </script>
 
-<div class="mt-16">
+<div class="tablet:mt-16 mt-4">
   {#each keyboardLayout as row}
     <div class="flex justify-center">
       {#each row as key}

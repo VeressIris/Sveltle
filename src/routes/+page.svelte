@@ -5,6 +5,9 @@
   import { generate } from "random-words";
 
   $winningWord = generate({ minLength: 5, maxLength: 5 }).toString();
+  if ($numOfTries === 6) {
+    $numOfTries = 0;
+  }
 </script>
 
 <div class="flex flex-row justify-end mt-4 mr-4">
@@ -48,9 +51,9 @@
     </svg>
   </label>
 </div>
-<div class="flex flex-col items-center h-screen my-10">
+<div class="flex flex-col items-center h-screen py-10 px-10">
   <h1 class="text-4xl"><span class="text-primary">Svelt</span>le</h1>
-  <p class="my-2 text-lg">
+  <p class="my-2 text-lg text-center">
     A <a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a>
     clone built with <a href="https://svelte.dev/">Svelte</a> and
     <a href="https://www.typescriptlang.org/">Typescript</a>.

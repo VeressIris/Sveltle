@@ -88,7 +88,7 @@
 
 <button
   on:click={handleKeyPress}
-  class="text-3xl rounded-md m-1 min-w-10 h-12 p-3 flex justify-center items-center"
+  class="tablet:text-3xl rounded-md tablet:m-1 tablet:min-w-12 tablet:h-12 p-3 text-2xl h-10 mx-[2px] my-[3px] min-w-0 w-8 flex justify-center items-center"
   class:bg-key-light={$isDark === false && active}
   class:bg-key-dark={$isDark === true && active}
   class:bg-base-300={!active}
@@ -96,13 +96,20 @@
   {#if key === "bcksp"}
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height="40px"
       viewBox="0 -960 960 960"
-      width="40px"
       fill={$isDark ? "#c7c9cc" : "#313531"}
+      class="w-[40px] h-[40px]"
       ><path
         d="M360-200q-21.33 0-39.17-10.67-17.83-10.66-30.16-28L120-480l170.67-241.33q12.33-17.34 30.16-28Q338.67-760 360-760h413.33q27.5 0 47.09 19.58Q840-720.83 840-693.33v426.66q0 27.5-19.58 47.09Q800.83-200 773.33-200H360Zm413.33-66.67v-426.66 426.66Zm-420.66 0h420.66v-426.66H352.67L202.67-480l150 213.33Zm98-57.33L560-433.33 669.33-324l47.34-47.33-110-108.67 108.66-108.67L668-636 560-526.67 450.67-636l-47.34 47.33 110 108.67-110 108.67L450.67-324Z"
       /></svg
+    >
+  {:else if key === "enter"}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 -960 960 960"
+      fill={$isDark ? "#c7c9cc" : "#313531"}
+      class="w-[20px] h-[20px]"
+      ><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" /></svg
     >
   {:else}
     {key}
