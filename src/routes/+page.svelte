@@ -1,7 +1,7 @@
 <script lang="ts">
   import Board from "../components/Board.svelte";
   import Keyboard from "../components/Keyboard.svelte";
-  import { isDark, winningWord } from "../stores";
+  import { isDark, winningWord, won, numOfTries } from "../stores";
   import { generate } from "random-words";
 
   $winningWord = generate({ minLength: 5, maxLength: 5 }).toString();
@@ -51,10 +51,16 @@
 <div class="flex flex-col items-center h-screen my-10">
   <h1 class="text-4xl"><span class="text-primary">Svelt</span>le</h1>
   <p class="my-2 text-lg">
-    A <a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a> clone
-    built with <a href="https://svelte.dev/">Svelte</a> and
+    A <a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a>
+    clone built with <a href="https://svelte.dev/">Svelte</a> and
     <a href="https://www.typescriptlang.org/">Typescript</a>.
   </p>
-  <Board />
-  <Keyboard />
+  {#if $won}
+    <h1 class="text-4xl mt-10">You <span class="text-success">won</span>!</h1>
+  {:else if $numOfTries === 6}
+    <h1 class="text-4xl mt-10">The word was {$winningWord}.</h1>
+  {:else}
+    <Board />
+    <Keyboard />
+  {/if}
 </div>

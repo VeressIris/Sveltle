@@ -148,3 +148,6 @@ if (typeof window !== "undefined") {
     localStorage.setItem("incorrectKeys", String(value));
   });
 }
+
+// won store
+export const won = writable(false);

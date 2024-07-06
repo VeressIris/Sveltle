@@ -9,6 +9,7 @@
     winningWord,
     colorBoard,
     incorrectKeys,
+    won,
   } from "../stores";
   import { get } from "svelte/store";
   import { wordExists } from "../util";
@@ -65,6 +66,10 @@
               } else {
                 $colorBoard[$numOfTries][i] = "success";
               }
+            }
+
+            if ($currentWord === $winningWord) {
+              $won = true;
             }
 
             $currentWord = ""; //reset current word
